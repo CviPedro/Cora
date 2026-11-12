@@ -38,6 +38,7 @@ model Product {
   media       ProductMedia[]
   stock       StockMovement[]
   orderItems  OrderItem[]
+  tags        ProductTag[]
 }
 
 model ProductMedia {
@@ -86,4 +87,20 @@ model Payment {
   gatewayId  String?
   status     String
   createdAt  DateTime @default(now())
+}
+
+model Tag {
+  id       Int          @id @default(autoincrement())
+  name     String
+  slug     String       @unique
+  products ProductTag[]
+}
+
+model ProductTag {
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tagId     Int
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([productId, tagId])
 }
