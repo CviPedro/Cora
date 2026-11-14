@@ -2,9 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Heart, ShoppingCart } from "lucide-react";
+import { openCart } from "@/lib/cart";
+import { openAuth } from "@/lib/ui";
+import { useCartCount } from "@/lib/useCartCount";
+import { useAuthUser } from "@/lib/useAuthUser";
+import UserMenu from "@/components/UserMenu";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const cartCount = useCartCount();
+  const user = useAuthUser();
 
   useEffect(() => {
     const onScroll = () => {
@@ -45,16 +53,43 @@ export default function Header() {
           />
         </form>
 
-        <nav className={scrolled ? "ml-auto hidden gap-2 md:flex" : "ml-auto flex gap-2"}>
-          <Link href="/cadastro" className="rounded-full border border-linho px-3 py-1.5 text-sm">
-            Cadastre-se
-          </Link>
-          <Link
-            href="/login"
-            className="rounded-full bg-acafrao px-3 py-1.5 text-sm font-medium text-cacau"
+        <nav className="ml-auto flex items-center gap-4">
+          {/* carrinho: só no computador (no celular fica no rodapé) */}
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label={`Abrir carrinho${cartCount > 0 ? ` (${cartCount} itens)` : ""}`}
+            className="relative hidden md:block"
           >
-            Login
-          </Link>
+            <ShoppingCart className="h-6 w-6" />
+            {cartCount > 0 && (
+              <span className="absolute -right-2 -top-2 min-w-4 rounded-full bg-acafrao px-1 text-center text-[10px] font-bold leading-4 text-cacau">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
+          </button>
+
+          {/* coleções: só para quem está logado */}
+          {user && (
+            <Link href="/colecoes" aria-label="Minhas coleções">
+              <Heart className="h-6 w-6" />
+            </Link>
+          )}
+
+          {/* conta */}
+          {user === undefined ? (
+            <span className="h-9 w-9" aria-hidden />
+          ) : user ? (
+            <UserMenu user={user} />
+          ) : (
+            <button
+              type="button"
+              onClick={() => openAuth("login")}
+              className="text-sm font-medium hover:underline"
+            >
+              Login
+            </button>
+          )}
         </nav>
       </div>
     </header>

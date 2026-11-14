@@ -2,6 +2,7 @@ export type CartItem = { productId: number; quantity: number };
 
 const KEY = "cora-cart";
 const EVENT = "cora-cart-change";
+const OPEN_EVENT = "cora-cart-open";
 
 function notify() {
   window.dispatchEvent(new Event(EVENT));
@@ -41,4 +42,13 @@ export function subscribeCart(callback: () => void) {
     window.removeEventListener(EVENT, callback);
     window.removeEventListener("storage", callback);
   };
+}
+
+export function openCart() {
+  window.dispatchEvent(new Event(OPEN_EVENT));
+}
+
+export function subscribeCartOpen(callback: () => void) {
+  window.addEventListener(OPEN_EVENT, callback);
+  return () => window.removeEventListener(OPEN_EVENT, callback);
 }

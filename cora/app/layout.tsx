@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import TagBar from "@/components/TagBar";
 import { Suspense } from "react";
 import BottomNav from "@/components/BottomNav"; 
+import CartDrawer from "@/components/CardDrawer";
+import AuthModal from "@/components/AuthModel";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +29,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Header />
         <TagBar />
-        <div className="pb-20">{children}</div>
+        <div className="pb-20 md:pb-0">{children}</div>
         <Suspense fallback={null}>
           <BottomNav />
         </Suspense>
+        <CartDrawer />
+        <AuthModal />
       </body>
     </html>
   );

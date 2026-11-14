@@ -86,3 +86,8 @@ export type Tag = Prisma.TagModel
  * 
  */
 export type ProductTag = Prisma.ProductTagModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel

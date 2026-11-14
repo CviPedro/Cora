@@ -104,3 +104,10 @@ model ProductTag {
 
   @@id([productId, tagId])
 }
+
+model Customer {
+  id        String   @id @db.Uuid
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+}

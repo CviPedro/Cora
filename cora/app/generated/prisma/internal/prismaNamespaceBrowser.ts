@@ -59,7 +59,8 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Payment: 'Payment',
   Tag: 'Tag',
-  ProductTag: 'ProductTag'
+  ProductTag: 'ProductTag',
+  Customer: 'Customer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -172,6 +173,16 @@ export const ProductTagScalarFieldEnum = {
 } as const
 
 export type ProductTagScalarFieldEnum = (typeof ProductTagScalarFieldEnum)[keyof typeof ProductTagScalarFieldEnum]
+
+
+export const CustomerScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
 export const SortOrder = {
